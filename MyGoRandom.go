@@ -8,7 +8,7 @@ import (
 
 func RandFloat(min, max float64) float64 {
 	if max < min {
-		panic("RandInt: max must be >= min")
+		panic("RandFloat: max must be >= min")
 	}
 	return min + mathRand.Float64()*(max-min)
 }
