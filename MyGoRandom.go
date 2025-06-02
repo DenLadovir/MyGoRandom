@@ -12,18 +12,20 @@ type Floats interface {
 	~float64 | ~float32
 }
 
-func RandFloat[T Floats](min, max T) float64 {
+func RandFloat[T Floats](min, max T) T {
 	if max < min {
 		panic("RandFloat: max must be >= min")
 	}
-	return float64(min) + mathRand.Float64()*float64((max-min)+1)
+	return min + T(mathRand.Float64())*(max-min)
 }
 
 func RandInt[T Integers](min, max T) T {
 	if max < min {
 		panic("RandInt: max must be >= min")
 	}
-	return T(int(min) + mathRand.Intn(int(max-min)))
+	var randSize int = int(max - min)
+	randomOffset := mathRand.Intn(randSize)
+	return min + T(randomOffset)
 }
 
 func Choice[T any](arr []T) (T, int) {
