@@ -25,12 +25,12 @@ func RandInt(min, max int) int {
 	return int(num.Int64()) + min
 }
 
-func Choice[T any](arr []T) T {
+func Choice[T any](arr []T) (T, int) {
 	if len(arr) == 0 {
 		panic("Empty slice")
 	}
 	var index int = RandInt(0, len(arr)-1)
-	return arr[index]
+	return arr[index], index
 }
 
 func Shuffle[T any](arr []T) {
