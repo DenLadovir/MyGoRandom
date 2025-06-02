@@ -1,28 +1,29 @@
 package MyGoRandom
 
 import (
-	cryptoRand "crypto/rand"
-	"math/big"
 	mathRand "math/rand"
 )
 
-func RandFloat(min, max float64) float64 {
+type Integers interface {
+	~int | ~int8 | ~int16 | ~int32 | ~int64 | ~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64
+}
+
+type Floats interface {
+	~float64 | ~float32
+}
+
+func RandFloat[T Floats](min, max T) T {
 	if max < min {
 		panic("RandFloat: max must be >= min")
 	}
-	return min + mathRand.Float64()*(max-min)
+	return T(float64(min) + mathRand.Float64()*float64((max-min)+1))
 }
 
-func RandInt(min, max int) int {
+func RandInt[T Integers](min, max T) T {
 	if max < min {
 		panic("RandInt: max must be >= min")
 	}
-	var maxBig *big.Int = big.NewInt(int64(max - min + 1))
-	num, err := cryptoRand.Int(cryptoRand.Reader, maxBig)
-	if err != nil {
-		panic(err)
-	}
-	return int(num.Int64()) + min
+	return T(int(min) + mathRand.Intn(int(max-min)))
 }
 
 func Choice[T any](arr []T) (T, int) {
