@@ -1,1 +1,1 @@
-module https://github.com/DenLadovir/MyGoRandom
+module github.com/DenLadovir/MyGoRandom
